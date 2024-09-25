@@ -1,0 +1,101 @@
+/* Reviews Section */
+.reviews-section {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 40px;
+  }
+  
+  .reviews-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Review Container */
+  .review-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  /* Individual Review */
+  .review {
+    background-color: #f4f4f4;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-style: italic;
+    color: #333;
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .review.active {
+    display: block;
+    opacity: 1;
+  }
+  
+  .review blockquote {
+    margin: 0;
+  }
+  
+  .review blockquote p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  .review footer {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .review footer cite {
+    display: block;
+    margin-bottom: 5px;
+    color: #007bff;
+  }
+  
+  .review .review-source {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  /* Navigation Dots for Carousel */
+  .review-navigation {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-dot.active {
+    background-color: #007bff;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .review {
+      padding: 20px;
+    }
+  
+    .review blockquote p {
+      font-size: 16px;
+    }
+  
+    .review footer cite {
+      font-size: 14px;
+    }
+  }
+  

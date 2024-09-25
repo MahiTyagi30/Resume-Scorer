@@ -1,0 +1,126 @@
+/* ScorePage Styles */
+
+.score-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #89CFF0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .score-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  .score-heading {
+    font-size: 28px;
+    color: #343a40;
+  }
+  
+  .score-box {
+    background-color: #6C63FF;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  .score {
+    font-size: 50px;
+    font-weight: bold;
+  }
+  
+  .score-description {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .match-container {
+    text-align: left;
+    margin-top: 30px;
+  }
+  
+  .match-heading {
+    font-size: 24px;
+    color: #343a40;
+  }
+  
+  .match-description {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .progress-section {
+    margin-bottom: 30px;
+  }
+  
+  .progress-bar {
+    position: relative;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .progress {
+    background-color: #28a745;
+    height: 100%;
+    transition: width 0.4s ease;
+  }
+  
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: #343a40;
+  }
+  
+  .criteria-breakdown {
+    margin-top: 20px;
+  }
+  
+  .criteria-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .check-icon {
+    color: #28a745;
+    margin-right: 10px;
+  }
+  
+  .warning-icon {
+    color: #ffc107;
+    margin-right: 10px;
+  }
+  
+  .call-to-action {
+    margin-top: 30px;
+  }
+  
+  .download-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .download-btn:hover {
+    background-color: #0056b3;
+  }
+  

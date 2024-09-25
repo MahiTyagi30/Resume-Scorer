@@ -1,0 +1,311 @@
+/* Ensuring all elements are box-sized correctly */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Container Styling */
+.container {
+  background-color: #89CFF0;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  padding: 0 20px;
+}
+.sub1{
+ margin-left: 750px;
+}
+
+/* Sub-header Styling */
+.sub-header {
+  display: inline-block;
+  padding: 10px 15px;
+  font-weight: bold;
+  background-color: #DDE9F5;
+  border-radius: 5px;
+margin: 5px;
+}
+
+/* Hero Section Styling */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow-x: hidden; /* Prevents horizontal overflow */
+  /* margin-bottom: 0; */
+}
+
+/* Content Wrapper Styling */
+.content-wrapper {
+  background-color: #DDE9F5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+   /* Ensure no overflow */
+  margin: 0 auto;
+}
+
+/* Main Content Styling */
+.main {
+  flex: 3;
+  /* Removed negative margin */
+  margin-left: 5px;
+  /* margin: 0; */
+  height: 500px;
+}
+
+/* Image Content Styling */
+.image-content {
+  flex: 1;
+  text-align: center;
+  margin-right: 20px;
+  /* margin: 0; */
+}
+
+/* Image Styling */
+.image-content img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+}
+
+/* Dropbox Styling */
+.dropbox {
+  border: 2px dashed #fff;
+  border-radius: 10px;
+  background-color: #6C63FF;
+  color: white;
+  text-align: center;
+  padding: 40px;
+  position: relative;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.centered-text {
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 300px;
+}
+
+.icon-row {
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 300px;
+}
+
+.icon-row span {
+  margin: 0 10px;
+  font-size: 24px; /* Adjust size as needed */
+}
+
+/* Hide File Input */
+.file-input {
+  display: none;
+}
+
+/* File Label Styling */
+.file-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Upload Icon Styling */
+.upload-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+/* Upload Text Styling */
+.upload-text {
+  font-size: 16px;
+}
+
+.upload-text strong {
+  font-size: 18px;
+}
+
+/* Privacy Badge Styling */
+.privacy-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.privacy-badge::before {
+  content: "🔒";
+  margin-right: 5px;
+}
+
+/* Main-2 Section Styling */
+.main-2 {
+  background-color: #c5e2ef;
+  padding: 20px;
+}
+
+.main-2 h1 {
+  text-align: center;
+}
+
+/* Flexbox Styling for .d1 */
+.d1 {
+  display: flex;
+  align-items: center; /* Vertically align text and image */
+  justify-content: space-between; /* Space between text and image */
+  margin-bottom: 20px;
+  padding-left: 40px;
+}
+
+/* Text container styling in .d1 */
+.d1 div {
+  flex: 1; /* Make the text container take up more space */
+}
+
+/* Link Styling */
+.d1 a {
+  color: #6C63FF;
+}
+
+/* Image container styling */
+.d1 .image-container {
+  flex: 0 0 200px; /* Fix the width of the image container */
+  text-align: right; /* Align image to the right */
+  margin-right: 60px;
+}
+
+.d1 .image-container img {
+  max-width: 100%; /* Ensure the image doesn't overflow */
+  max-height: 200px; 
+  /* height: 180px;
+  width: 800px; */
+  border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .d1 {
+    flex-direction: column; /* Stack the text and image vertically */
+    text-align: left;
+  }
+
+  .d1 .image-container {
+    text-align: center; /* Center the image in mobile view */
+    margin-top: 20px;
+  }
+}
+
+.score-display {
+  color: black;
+  font-size: 20px;
+}
+
+
+.footer {
+  background-color: #dbeaef;
+  color: #0b0b0b;
+  padding: 50px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 250px;
+  margin: 10px;
+}
+
+.footer-column h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #0b0b0b;
+}
+
+.footer-column p {
+  margin-bottom: 15px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: #0b0b0b;
+  text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+  color:#6C63FF;
+}
+
+.social-icons a {
+  color: #0b0b0b;
+  font-size: 18px;
+  margin-right: 15px;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color:#6C63FF;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #444;
+  padding: 20px 0;
+  margin-top: 30px;
+}
+
+.footer-bottom p {
+  margin-bottom: 10px;
+}
+
+.footer-bottom ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-bottom ul li {
+  margin: 0 15px;
+}
+
+.footer-bottom ul li a {
+  color: #0b0b0b;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-bottom ul li a:hover {
+  color:#6C63FF;
+}
+
