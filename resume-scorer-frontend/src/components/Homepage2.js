@@ -27,7 +27,7 @@ function Homepage2() {
 
 
 
-  // Handle Google login
+  //handle login functionality
   
 
   const handleLogin = async () => {
