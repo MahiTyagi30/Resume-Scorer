@@ -436,8 +436,8 @@ function Homepage2() {
                 <li><a href="#">Cookie Policy</a></li>
                 <li><a href="#">Companies Hiring List</a></li>
               </ul>
-              <img src="your-logo.png" alt="Logo" />
-              <p>© 2024 Jobscan</p>
+              {/* <img src="your-logo.png" alt="Logo" /> */}
+              <p>© 2024 ResumeScorer</p>
             </div>
           </div>
           <div className="footer-social">
