@@ -6,7 +6,7 @@ import atsImage from '../images/resume-apply-work-form-concept.jpg';
 import img2 from '../images/4115334.jpg';
 import img3 from '../images/5052521.jpg';
 import Reviews from './Reviews';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import { auth, provider, signInWithPopup, signOut,onAuthStateChanged } from './firebase'; // Import Firebase auth functions
 import { setPersistence, browserSessionPersistence, signInWithRedirect } from 'firebase/auth';
 
@@ -144,13 +144,13 @@ function Homepage2() {
     <>
       <header>
         <div className="head">
-          <h1>ResumScan</h1>
+          <h1>ResumeScan</h1>
           <div className="right-section">
-            <ul className="nav">
-              <li>Products</li>
-              <li>Features</li>
-              <li>Contact</li>
-            </ul>
+          <ul className="nav">
+  <li>Products</li>
+  <li onClick={() => navigate('/templates')}>Build Resume</li>
+  <li>Contact</li>
+</ul>
             {user ? (
               <div className="user-section">
                 <img
