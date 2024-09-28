@@ -1,12 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-// Sample templates, you can expand this with actual design templates
-const templates = [
-  { id: 1, name: 'Professional Template' },
-  { id: 2, name: 'Creative Template' },
-  { id: 3, name: 'Simple Template' },
-];
+import templates from '../templates'; // Import templates
 
 function ResumeTemplates() {
   return (

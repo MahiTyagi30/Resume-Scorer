@@ -4,7 +4,7 @@ import UploadResume from './components/UploadResume';
 import ScorePage from './components/ScorePage';
 import Homepage2 from './components/Homepage2';
 import ResumeTemplates from './components/ResumeTemplates';
-import EditTemplate from './components/EditTemplate'; // Import EditTemplate component
+import EditTemplate from './components/EditTemplate'; // Import EditTemplate
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
           <Route path="/upload" element={<UploadResume />} />
           <Route path="/score" element={<ScorePage />} />
           <Route path="/templates" element={<ResumeTemplates />} />
-          <Route path="/edit-template/:id" element={<EditTemplate />} /> {/* Route for editing */}
+          <Route path="/edit-template/:id" element={<EditTemplate />} /> {/* Route for editing template */}
         </Routes>
       </div>
     </Router>
