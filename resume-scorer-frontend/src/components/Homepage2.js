@@ -28,8 +28,6 @@ function Homepage2() {
 
 
   //handle login functionality
-  
-
   const handleLogin = async () => {
     try {
       await setPersistence(auth, browserSessionPersistence); // Persist for session only
@@ -436,6 +434,8 @@ function Homepage2() {
                 <li><a href="#">Cookie Policy</a></li>
                 <li><a href="#">Companies Hiring List</a></li>
               </ul>
+
+              
               {/* <img src="your-logo.png" alt="Logo" /> */}
               <p>© 2024 ResumeScorer</p>
             </div>
