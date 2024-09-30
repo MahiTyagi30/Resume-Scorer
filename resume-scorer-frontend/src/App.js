@@ -15,7 +15,7 @@ function App() {
           <Route path="/upload" element={<UploadResume />} />
           <Route path="/score" element={<ScorePage />} />
           <Route path="/templates" element={<ResumeTemplates />} />
-          <Route path="/edit-template/:id" element={<EditTemplate />} /> {/* Route for editing template */}
+          <Route path="/edit-template/:id" element={<EditTemplate />} /> 
         </Routes>
       </div>
     </Router>
