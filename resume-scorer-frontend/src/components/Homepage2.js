@@ -450,14 +450,6 @@ function Homepage2() {
           </div>
         </section>
 
-
-
-
-
-
-
-
-
       </main>
     </>
   );
