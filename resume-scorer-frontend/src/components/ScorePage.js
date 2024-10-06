@@ -36,6 +36,12 @@ const ScorePage = () => {
     doc.save('Resume_Score_Report.pdf');
   };
 
+  // Function to handle sending email
+  const handleSendEmail = () => {
+    // Placeholder for email functionality
+    alert('Email sent! (This is a placeholder. You need to implement actual email sending.)');
+  };
+
   return (
     <div className="score-page">
       <div className="score-container">
@@ -98,6 +104,9 @@ const ScorePage = () => {
             <p>Want personalized tips? Download the detailed report below!</p>
             <button className="download-btn" onClick={handleDownloadReport}>
               Download Report
+            </button>
+            <button className="send-email-btn" onClick={handleSendEmail}>
+              Send Email
             </button>
           </div>
         </div>

@@ -1,126 +1,112 @@
-/* ScorePage Styles */
+/* ScorePage.css */
+html, body {
+  height: 100%; /* Set html and body to full height */
+  margin: 0; /* Remove default margin */
+}
 
 .score-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #89CFF0;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .score-container {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    text-align: center;
-    max-width: 600px;
-    width: 100%;
-  }
-  
-  .score-heading {
-    font-size: 28px;
-    color: #343a40;
-  }
-  
-  .score-box {
-    background-color: #6C63FF;
-    color: white;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px 0;
-  }
-  
-  .score {
-    font-size: 50px;
-    font-weight: bold;
-  }
-  
-  .score-description {
-    font-size: 18px;
-    margin-top: 10px;
-  }
-  
-  .match-container {
-    text-align: left;
-    margin-top: 30px;
-  }
-  
-  .match-heading {
-    font-size: 24px;
-    color: #343a40;
-  }
-  
-  .match-description {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
-  .progress-section {
-    margin-bottom: 30px;
-  }
-  
-  .progress-bar {
-    position: relative;
-    height: 20px;
-    background-color: #e9ecef;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .progress {
-    background-color: #28a745;
-    height: 100%;
-    transition: width 0.4s ease;
-  }
-  
-  .progress-text {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    font-size: 14px;
-    font-weight: bold;
-    color: #343a40;
-  }
-  
-  .criteria-breakdown {
-    margin-top: 20px;
-  }
-  
-  .criteria-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .check-icon {
-    color: #28a745;
-    margin-right: 10px;
-  }
-  
-  .warning-icon {
-    color: #ffc107;
-    margin-right: 10px;
-  }
-  
-  .call-to-action {
-    margin-top: 30px;
-  }
-  
-  .download-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .download-btn:hover {
-    background-color: #0056b3;
-  }
-  
+  height: 100vh; /* Full height of the viewport */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background-color: #f5f5f5; /* Light background */
+  padding: 20px;
+}
+
+.score-container {
+  max-width: 600px; /* Limit container width */
+  width: 100%; /* Full width for responsiveness */
+  background: white; /* White background for the score box */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.score-heading {
+  font-size: 24px;
+  color: #333; /* Darker text color */
+  text-align: center; /* Center the heading */
+  font-weight: bold; /* Bold heading */
+}
+
+.score-box {
+  text-align: center; /* Center score box text */
+  margin-bottom: 20px;
+}
+
+.score {
+  font-size: 48px;
+  color: #4caf50; /* Green color for score */
+  font-weight: bold; /* Bold score */
+}
+
+.match-heading, 
+.suggestions-section h3 {
+  font-size: 20px;
+  color: #1976d2; /* Blue color for match headings */
+  font-weight: bold; /* Bold headings */
+}
+
+.progress-section {
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  position: relative;
+  height: 20px;
+  background-color: #e0e0e0; /* Light grey for background */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.progress {
+  height: 100%;
+  background-color: #76c7c0; /* Teal color for progress */
+  border-radius: 10px; /* Rounded corners */
+  transition: width 0.5s ease; /* Smooth transition */
+}
+
+.criteria-breakdown {
+  margin: 15px 0;
+}
+
+.criteria-item {
+  display: flex;
+  align-items: center; /* Center icon and text */
+  margin: 5px 0; /* Spacing between items */
+}
+
+.check-icon {
+  color: #4caf50; /* Green for matches */
+  margin-right: 10px; /* Space between icon and text */
+}
+
+.warning-icon {
+  color: #f44336; /* Red for warnings */
+  margin-right: 10px; /* Space between icon and text */
+}
+
+.suggestions-list {
+  list-style-type: disc; /* Bulleted list */
+  padding-left: 20px; /* Indentation for bullets */
+}
+
+.call-to-action {
+  margin-top: 20px; /* Space above call to action */
+  text-align: center; /* Center call to action */
+}
+
+.download-btn, .send-email-btn {
+  background-color: #1976d2; /* Blue background for buttons */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Padding for buttons */
+  margin: 5px; /* Space between buttons */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s; /* Smooth background change */
+}
+
+.download-btn:hover, .send-email-btn:hover {
+  background-color: #155a8a; /* Darker blue on hover */
+}
