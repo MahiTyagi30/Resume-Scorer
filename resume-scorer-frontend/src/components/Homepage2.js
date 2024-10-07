@@ -85,55 +85,60 @@ function Homepage2() {
   // Handle file upload
   const [loading, setLoading] = useState(false); // Loading state
 
-const handleUpload = async (event) => {
-  event.preventDefault();
-  if (!selectedFile) {
-    setUploadError('Please select a file to upload.');
-    return;
-  }
-  if (!jobProfile) {
-    setUploadError('Please select a job profile.');
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('resume', selectedFile);
-  formData.append('jobProfile', jobProfile);
-
-  setLoading(true); // Start loading
-
-  try {
-    const response = await fetch('http://localhost:5000/upload-resume', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+  const handleUpload = async (event) => {
+    event.preventDefault();
+    
+    if (!selectedFile) {
+      setUploadError('Please select a file to upload.');
+      return;
     }
-
-    const data = await response.json();
-    if (data.score !== undefined) {
-      setUploadSuccess(`Uploaded: ${selectedFile.name}`);
-      setScore(data.score);
-      navigate('/score', {
-        state: {
-          score: data.score,
-          characterMatch: data.characterMatch || 0,
-          matchDetails: data.matchDetails || [],
-          suggestions: data.suggestions || [],
-        },
+    
+    if (!jobProfile) {
+      setUploadError('Please select a job profile.');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('resume', selectedFile);
+    formData.append('jobProfile', jobProfile);
+    
+    console.log([...formData]); // Log FormData entries
+  
+    setLoading(true); // Start loading
+  
+    try {
+      const response = await fetch('http://localhost:5000/upload-resume', {
+        method: 'POST',
+        body: formData,
       });
-    } else {
-      setUploadError('Score data not found in the response.');
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      if (data.score !== undefined) {
+        setUploadSuccess(`Uploaded: ${selectedFile.name}`);
+        setScore(data.score);
+        navigate('/score', {
+          state: {
+            score: data.score,
+            characterMatch: data.characterMatch || 0,
+            matchDetails: data.matchDetails || [],
+            suggestions: data.suggestions || [],
+          },
+        });
+      } else {
+        setUploadError('Score data not found in the response.');
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      setUploadError('Error connecting to the server. Please try again.');
+    } finally {
+      setLoading(false); // End loading
     }
-  } catch (error) {
-    console.error('Upload error:', error);
-    setUploadError('Error connecting to the server. Please try again.');
-  } finally {
-    setLoading(false); // End loading
-  }
-};
+  };
+  
 
   
 
