@@ -1,75 +1,121 @@
-const express = require('express');
-const multer = require('multer'); // For handling file uploads
-const natural = require('natural'); // For natural language processing
-const cors = require('cors'); // For handling CORS
-const path = require('path');
-const fs = require('fs');
-const pdf = require('pdf-parse'); // For parsing PDF files
-const { Document, Packer } = require('docx'); // For handling DOCX files
-
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-// Set up multer for file uploads
-const upload = multer({ dest: 'uploads/' });
-
-app.post('/upload-resume', upload.single('resume'), async (req, res) => {
-    const jobProfile = req.body.jobProfile;
-
-    if (!req.file || !jobProfile) {
-        return res.status(400).json({ message: 'File or Job Profile missing' });
+const calculateResumeDetails = (resumeText, jobProfile) => {
+    const profileKeywords = jobProfiles[jobProfile];
+    if (!profileKeywords) {
+      throw new Error('Invalid job profile selected.');
     }
-
-    try {
-        const resumeText = await extractTextFromResume(req.file);
-        const tokenizer = new natural.WordTokenizer();
-        const tokens = tokenizer.tokenize(resumeText);
-
-        // Example: scoring based on keyword match (simple placeholder logic)
-        const keywords = getKeywordsForJobProfile(jobProfile);
-        const matchedKeywords = tokens.filter(token => keywords.includes(token.toLowerCase()));
-
-        const score = (matchedKeywords.length / keywords.length) * 100; // Calculate score based on matches
-        const characterMatch = matchedKeywords.length;
-
-        res.json({
-            score: Math.round(score),
-            characterMatch,
-            matchDetails: matchedKeywords,
-            suggestions: generateSuggestions(tokens, keywords), // Generate suggestions
+  
+    const { hardSkills, softSkills, certifications } = profileKeywords;
+    let score = 0;
+    let matchedCharacters = 0;
+    let suggestions = [];
+    const totalCharacters = resumeText.length;
+  
+    // Function to add suggestions for missing skills
+    const addMissingSuggestions = (keywords, type) => {
+      const missingKeywords = keywords.filter((keyword) => {
+        const regex = new RegExp(keyword, 'gi');
+        return !resumeText.match(regex);
+      });
+  
+      if (missingKeywords.length > 0) {
+        suggestions.push(`Consider adding the following missing ${type}: ${missingKeywords.join(', ')}.`);
+      }
+    };
+  
+    // Hard Skills (15%)
+    hardSkills.forEach((skill) => {
+      const regex = new RegExp(skill, 'gi');
+      const matches = resumeText.match(regex);
+      if (matches) {
+        matches.forEach((match) => {
+          matchedCharacters += match.length;
         });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error processing the resume' });
-    }
-});
-
-// Function to extract text from resume
-async function extractTextFromResume(file) {
-    const filePath = path.join(__dirname, file.path);
-    const fileExt = path.extname(file.originalname).toLowerCase();
-
-    let text = '';
-
-    if (fileExt === '.pdf') {
-        const dataBuffer = fs.readFileSync(filePath);
-        const data = await pdf(dataBuffer);
-        text = data.text; // Extracted text from PDF
-    } else if (fileExt === '.docx') {
-        const doc = await Document.load(filePath);
-        text = doc.getText(); // Extracted text from DOCX (may require additional logic)
+        score += 5;
+      }
+    });
+  
+    // Suggest missing hard skills
+    addMissingSuggestions(hardSkills, 'hard skills');
+  
+    // Soft Skills (5%)
+    softSkills.forEach((skill) => {
+      const regex = new RegExp(skill, 'gi');
+      const matches = resumeText.match(regex);
+      if (matches) {
+        matches.forEach((match) => {
+          matchedCharacters += match.length;
+        });
+        score += 2;
+      }
+    });
+  
+    // Suggest missing soft skills
+    addMissingSuggestions(softSkills, 'soft skills');
+  
+    // Certifications (5%)
+    certifications.forEach((cert) => {
+      const regex = new RegExp(cert, 'gi');
+      const matches = resumeText.match(regex);
+      if (matches) {
+        matches.forEach((match) => {
+          matchedCharacters += match.length;
+        });
+        score += 3;
+      }
+    });
+  
+    // Suggest missing certifications
+    addMissingSuggestions(certifications, 'certifications');
+  
+    // Experience Section (20-30%)
+    if (resumeText.toLowerCase().includes('experience')) {
+      score += 10;
+      const yearsOfExperience = (resumeText.match(/(\d+)\s+years?\s+of\s+experience/g) || []).length;
+      score += Math.min(20, yearsOfExperience * 5); // Add score based on experience, cap at 20%
     } else {
-        throw new Error('Unsupported file type');
+      suggestions.push('Add a work experience section to showcase your professional history.');
     }
-
-    // Clean up the uploaded file after extraction
-    fs.unlinkSync(filePath); // Remove the file after processing
-    return text;
-}
-
-// Rest of your code remains the same...
-
-app.listen(5000, () => {
-    console.log('Server is running on port 5000');
-});
+  
+    // Education Section (10-15%)
+    if (resumeText.toLowerCase().includes('education')) {
+      score += 10;
+      if (resumeText.toLowerCase().includes('b.tech') || resumeText.toLowerCase().includes('b.sc')) {
+        score += 5; // Extra points for relevant education
+      }
+    } else {
+      suggestions.push('Include your education history, as it helps show your qualifications.');
+    }
+  
+    // Projects Section (10-15%)
+    if (resumeText.toLowerCase().includes('projects')) {
+      score += 10;
+      const relevantProjects = resumeText.match(/full stack|open source|react/g) || [];
+      relevantProjects.forEach((project) => {
+        matchedCharacters += project.length;
+      });
+      score += relevantProjects.length * 2;
+    } else {
+      suggestions.push('Include a projects section to showcase your achievements.');
+    }
+  
+    // Additional Sections
+    if (resumeText.toLowerCase().includes('award') || resumeText.toLowerCase().includes('honor')) {
+      score += 5; // Add points for achievements and awards
+    }
+  
+    // Character Match Percentage as Integer
+    const characterMatch = Math.floor((matchedCharacters / totalCharacters) * 100);
+  
+    if (resumeText.length < 300) {
+      suggestions.push('Your resume seems too short. Try to include more detailed information about your experience and skills.');
+    } else if (resumeText.length > 7000) {
+      suggestions.push('Your resume is too long. Try to keep it concise and focused on key achievements.');
+    }
+  
+    return {
+      score: Math.min(100, score), // Cap the total score at 100
+      characterMatch,
+      suggestions,
+    };
+  };
+  
