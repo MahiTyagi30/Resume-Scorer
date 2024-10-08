@@ -28,19 +28,75 @@ if (!fs.existsSync('uploads')) {
   fs.mkdirSync('uploads');
 }
 
-// Sample jobProfiles data (you can define your job profiles here or load from a database)
+// Job profiles and their associated keywords
 const jobProfiles = {
-  "softwareEngineer": { /* job profiles data */ },
-  "dataAnalyst": { /* job profiles data */ }
+  'ReactJS Developer': ["React", "JavaScript", "Redux", "CSS", "HTML", "Node.js"],
+  'Full Stack Developer': ["JavaScript", "Node.js", "React", "Express", "MongoDB", "REST APIs"],
+  'Frontend Developer': ["HTML", "CSS", "JavaScript", "React", "Vue", "Angular"],
+  'Web Developer': ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+  'Software Engineer': ["Java", "C++", "Python", "Algorithms", "Data Structures"],
+  'Data Scientist': ["Python", "R", "Machine Learning", "Statistics", "SQL", "Pandas"],
+  'Product Manager': ["Agile", "Scrum", "Roadmap", "User Experience", "Stakeholder Management"]
 };
 
-// Function to calculate resume details (remains unchanged)
-// ...
+// Function to calculate resume details
+const calculateResumeDetails = (resumeText, jobProfile) => {
+  if (!resumeText || !jobProfile || !jobProfiles[jobProfile]) {
+    throw new Error('Invalid input data');
+  }
+
+  const keywords = jobProfiles[jobProfile];
+
+  // Scoring criteria
+  const scoringCriteria = {
+    contactInfo: { weight: 10, keywords: ["name", "phone", "email", "LinkedIn"] },
+    professionalSummary: { weight: 10, keywords: ["summary", "achievements", "goals"] },
+    workExperience: { weight: 30, keywords: ["experience", "job title", "company", "dates", "action verbs"] },
+    education: { weight: 10, keywords: ["degree", "certification", "institution"] },
+    skills: { weight: 15, keywords: ["skills", "expertise", "proficient"] },
+    formattingStyle: { weight: 15, keywords: ["format", "layout", "style"] },
+    customTailoring: { weight: 10, keywords: ["keywords", "job description"] },
+    additionalSections: { weight: 10, keywords: ["volunteer", "certifications", "languages"] }
+  };
+
+  let totalScore = 0;
+
+  // Calculate score based on each criterion
+  for (const criterion in scoringCriteria) {
+    const { weight, keywords } = scoringCriteria[criterion];
+    let criterionScore = 0;
+
+    keywords.forEach(keyword => {
+      if (resumeText.toLowerCase().includes(keyword.toLowerCase())) {
+        criterionScore += weight; // Award points based on weight
+      }
+    });
+
+    totalScore += criterionScore;
+  }
+
+  // Ensure totalScore is capped at 100
+  totalScore = Math.min(totalScore, 100);
+
+  // Determine feedback based on score range
+  let feedback;
+  if (totalScore >= 90) {
+    feedback = "Excellent";
+  } else if (totalScore >= 75) {
+    feedback = "Good";
+  } else if (totalScore >= 50) {
+    feedback = "Fair";
+  } else {
+    feedback = "Needs Improvement";
+  }
+
+  return { score: totalScore, feedback, details: `Profile matched: ${jobProfile}` };
+};
 
 // API endpoint to process resume text directly
 app.post('/score-resume', (req, res) => {
   const { resumeText, jobProfile } = req.body;
-  
+
   try {
     const result = calculateResumeDetails(resumeText, jobProfile);
     res.json(result);
