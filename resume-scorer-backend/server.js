@@ -7,7 +7,6 @@ const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 5000;
-
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
@@ -28,7 +27,7 @@ if (!fs.existsSync('uploads')) {
   fs.mkdirSync('uploads');
 }
 
-// Job profiles and their associated keywords
+// Job profiles and their associated keywordss
 const jobProfiles = {
   'ReactJS Developer': ["React", "JavaScript", "Redux", "CSS", "HTML", "Node.js"],
   'Full Stack Developer': ["JavaScript", "Node.js", "React", "Express", "MongoDB", "REST APIs"],
