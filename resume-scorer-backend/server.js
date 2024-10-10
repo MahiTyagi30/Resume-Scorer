@@ -73,7 +73,6 @@ const calculateResumeDetails = (resumeText, jobProfile) => {
 
     totalScore += criterionScore;
   }
-
   // Ensure totalScore is capped at 100
   totalScore = Math.min(totalScore, 100);
 
@@ -131,7 +130,6 @@ app.post('/upload-resume', upload.single('resume'), (req, res) => {
     }
   });
 });
-
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
