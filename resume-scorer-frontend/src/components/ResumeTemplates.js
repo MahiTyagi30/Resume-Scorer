@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import templates from '../templates'; // Import templates
 
 
-
-
-
 function ResumeTemplates() {
   return (
     <div>
