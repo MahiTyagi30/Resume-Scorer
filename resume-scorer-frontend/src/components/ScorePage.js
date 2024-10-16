@@ -1,25 +1,28 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
-import { jsPDF } from 'jspdf'; // Import jsPDF for generating PDF
-import './ScorePage.css'; // Add your custom styles here
+import { useLocation } from 'react-router-dom';
+import { jsPDF } from 'jspdf';
+import './ScorePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 const ScorePage = () => {
-  const location = useLocation(); // Get location object
-  const { state } = location; // Extract state from location object
+  const location = useLocation();
+  const { state } = location;
   const {
     score = 0,
     characterMatch = 0,
-    matchDetails = [], // Default to empty array if no matchDetails
-    suggestions = [] // Default to empty array if no suggestions
-  } = state || {}; // Default values if state is undefined
+    matchDetails = [],
+    suggestions = []
+  } = state || {};
+
+  // Get user data from local storage
+  const userData = localStorage.getItem('user');
+  const userEmail = userData ? JSON.parse(userData).email : null; // Parse the user object and get the email
 
   // Function to handle the download of the report as PDF
   const handleDownloadReport = () => {
     const doc = new jsPDF();
 
-    // Add content to the PDF
     doc.setFontSize(22);
     doc.text('Resume Score Report', 10, 20);
 
@@ -32,14 +35,44 @@ const ScorePage = () => {
       doc.text(`${index + 1}. ${suggestion}`, 10, 80 + index * 10);
     });
 
-    // Save the PDF
     doc.save('Resume_Score_Report.pdf');
   };
 
   // Function to handle sending email
-  const handleSendEmail = () => {
-    // Placeholder for email functionality
-    alert('Email sent! (This is a placeholder. You need to implement actual email sending.)');
+  const handleSendEmail = async () => {
+    if (!userEmail) {
+      alert('No email found in local storage. Please log in.');
+      return;
+    }
+
+    const emailContent = {
+      to: userEmail,
+      subject: 'Your Resume Score Report',
+      body: `
+        Score: ${score}/100
+        Character Match: ${characterMatch}%
+        Suggestions for Improvement: ${suggestions.join(', ')}
+      `
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/send-email', { // Update with your API URL
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailContent),
+      });
+
+      if (response.ok) {
+        alert('Email sent successfully!');
+      } else {
+        throw new Error('Failed to send email');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred while sending the email. Please try again later.');
+    }
   };
 
   return (
@@ -59,7 +92,6 @@ const ScorePage = () => {
             We analyzed your resume for key sections, skills, and keywords that match your target job description.
           </p>
 
-          {/* Character Match Progress */}
           <div className="progress-section">
             <div className="progress-bar">
               <span className="progress-text">Matched Characters: {characterMatch}%</span>
@@ -67,7 +99,6 @@ const ScorePage = () => {
             </div>
           </div>
 
-          {/* Matching Criteria Breakdown */}
           <div className="criteria-breakdown">
             {matchDetails.length > 0 ? (
               matchDetails.map((detail, index) => (
@@ -85,7 +116,6 @@ const ScorePage = () => {
             )}
           </div>
 
-          {/* Suggestions for Improvement */}
           <div className="suggestions-section">
             <h3>Suggestions for Improvement</h3>
             <ul className="suggestions-list">
@@ -99,7 +129,6 @@ const ScorePage = () => {
             </ul>
           </div>
 
-          {/* Call-to-Action */}
           <div className="call-to-action">
             <p>Want personalized tips? Download the detailed report below!</p>
             <button className="download-btn" onClick={handleDownloadReport}>

@@ -28,29 +28,56 @@ function Homepage2() {
 
 
   //handle login functionality
-  const handleLogin = async () => {
-    try {
-      await setPersistence(auth, browserSessionPersistence); // Persist for session only
-      const result = await signInWithPopup(auth, provider);
-      setUser(result.user);  // Update the state with the logged-in user
-    } catch (error) {
-      console.error('Login error:', error);
-    }
-  };
-  
-  
-  
+  // const [user, setUser] = useState(null);
 
-  // Handle Google logout
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-      console.log('User logged out');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
+    // Check user authentication state
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, save user data to local storage
+                const userData = {
+                    uid: user.uid,
+                    email: user.email,
+                };
+                setUser(userData);
+                localStorage.setItem('user', JSON.stringify(userData)); // Save user to local storage
+            } else {
+                // User is signed out
+                setUser(null);
+                localStorage.removeItem('user'); // Remove user from local storage
+            }
+        });
+
+        return () => unsubscribe(); // Cleanup subscription on unmount
+    }, []);
+
+    // Handle Google login
+    const handleLogin = async () => {
+        try {
+            await setPersistence(auth, browserSessionPersistence); // Persist for session only
+            const result = await signInWithPopup(auth, provider);
+            const userData = {
+                uid: result.user.uid,
+                email: result.user.email,
+            };
+            setUser(userData); // Update the state with the logged-in user
+            localStorage.setItem('user', JSON.stringify(userData)); // Save user data to local storage
+        } catch (error) {
+            console.error('Login error:', error);
+        }
+    };
+
+    // Handle Google logout
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            setUser(null); // Clear user state
+            localStorage.removeItem('user'); // Remove user data from local storage
+            console.log('User logged out');
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
   
   
   useEffect(() => {

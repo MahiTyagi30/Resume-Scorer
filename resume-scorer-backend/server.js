@@ -4,6 +4,8 @@ const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer'); // Import Nodemailer
+require('dotenv').config(); // Import dotenv for environment variables
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -37,6 +39,15 @@ const jobProfiles = {
   'Data Scientist': ["Python", "R", "Machine Learning", "Statistics", "SQL", "Pandas"],
   'Product Manager': ["Agile", "Scrum", "Roadmap", "User Experience", "Stakeholder Management"]
 };
+
+// Configure Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // Change this if using another service
+  auth: {
+    user: process.env.EMAIL_USER, // Your email from .env file
+    pass: process.env.EMAIL_PASS // Your email password from .env file
+  }
+});
 
 // Function to calculate resume details
 const calculateResumeDetails = (resumeText, jobProfile) => {
@@ -150,6 +161,25 @@ app.post('/upload-resume', upload.single('resume'), (req, res) => {
         }
       });
     }
+  });
+});
+
+// New API endpoint to send email
+app.post('/send-email', (req, res) => {
+  const { email, reportContent } = req.body;
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: 'Your Resume Score Report',
+    text: reportContent
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to send email' });
+    }
+    res.json({ message: 'Email sent successfully', info });
   });
 });
 
