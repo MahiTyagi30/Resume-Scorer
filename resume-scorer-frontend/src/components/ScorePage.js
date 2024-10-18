@@ -14,7 +14,6 @@ const ScorePage = () => {
     matchDetails = [],
     suggestions = []
   } = state || {};
-
   // Get user data from local storage
   const userData = localStorage.getItem('user');
   const userEmail = userData ? JSON.parse(userData).email : null; // Parse the user object and get the email
